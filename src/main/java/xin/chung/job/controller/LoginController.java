@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Author Chung
  * @Date 2018/09/22 20:05
  */
-//@CrossOrigin(origins = "http://127.0.0.1:8081", maxAge = 3600, allowCredentials = "true")
-@CrossOrigin(origins = "http://www.chung.xin:80", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://127.0.0.1:8081", maxAge = 3600, allowCredentials = "true")
 @RestController
 public class LoginController {
     @Autowired
