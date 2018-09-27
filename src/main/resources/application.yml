@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+#  mvc:
+#    view:
+#      prefix: /templates/
+#      suffix: .html
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/job
+    username: **
+    password: **
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
