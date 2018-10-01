@@ -12,10 +12,12 @@ public enum Progress {
     WAIT_TECH_INTERVIEW1(2, "待初面"),
     WAIT_TECH_INTERVIEW2(3, "待复面"),
     WAIT_TECH_INTERVIEW3(4, "待三面"),
-    WAIT_TECH_INTERVIEW4(5, "待四面"),
+//    WAIT_TECH_INTERVIEW4(5, "待四面"),
     WAIT_HR_INTERVIEW(6, "待HR面"),
-    WAIT_THE_OFFER(7, "待OFFER"),
-    ALL_FINISH(8, "结束");
+    WAIT_THE_OFFER(7, "待通知"),
+    ALL_FINISH(8, "被拒"),
+    GOT_OFFER(9, "OFFER");
+
 
     public final int value;
     public final String desc;

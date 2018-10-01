@@ -7,15 +7,22 @@ import org.springframework.util.StringUtils;
  * @Date 2018/09/22 18:41
  */
 public enum HistoryProgress {
-    RESUME_SUBMIT(0, "初筛完成"),
-    WAIT_TO_EXAM(1, "笔试完成"),
-    WAIT_TECH_INTERVIEW1(2, "初面完成"),
-    WAIT_TECH_INTERVIEW2(3, "复面完成"),
-    WAIT_TECH_INTERVIEW3(4, "三面完成"),
-    WAIT_TECH_INTERVIEW4(5, "四面完成"),
-    WAIT_HR_INTERVIEW(6, "待HR面完成"),
-    WAIT_THE_OFFER(7, "OFFER"),
-    ALL_FINISH(8, "结束");
+    RESUME_SUCCEED(1, "初筛通过"),
+    RESUME_FAIL(10, "初筛未通过"),
+    EXAM_SUCCEED(2, "笔试通过"),
+    EXAM_FAIL(11, "笔试未通过"),
+    TECH_INTERVIEW1_SUCCEED(3, "初面通过"),
+    TECH_INTERVIEW1_FAIL(12, "初面未通过"),
+    TECH_INTERVIEW2_SUCCEED(4, "复面通过"),
+    TECH_INTERVIEW2_FAIL(13, "复面未通过"),
+    TECH_INTERVIEW3_SUCCEED(5, "三面通过"),
+    TECH_INTERVIEW3_FAIL(14, "三面未通过"),
+//    TECH_INTERVIEW4_SUCCEED(6, "四面通过"),
+//    TECH_INTERVIEW4_FAIL(15, "四面未通过"),
+    HR_INTERVIEW_SUCCEED(7, "HR面通过"),
+    HR_INTERVIEW_FAIL(16, "HR面未通过"),
+    OFFER_FAIL(17, "未拿到OFFER"),
+    GOT_OFFER(9, "拿到OFFER");
 
     public final int value;
     public final String desc;

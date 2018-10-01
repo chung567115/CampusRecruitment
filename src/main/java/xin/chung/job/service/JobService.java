@@ -42,13 +42,46 @@ public class JobService {
     }
 
     public ResponseDTO addOrUpdateJob(RecruitmentDTO dto, int userId, boolean isAdd) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdfH = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String history = "[]";
         if (!isAdd) {
             Recruitment old = jobRepository.findByIdAndStatus(dto.getId(), DBStatus.NOR.value);
             boolean added = false;
+            // 如果old进度不为空，且old进度和新进度不同
             if (null != old && !old.getProgress().equals(Progress.descToValue(dto.getProgress()))) {
                 JSONArray jsonArray = JSONArray.fromObject(old.getHistory());
-                HistoryDTO historyDTO = new HistoryDTO(HistoryProgress.value2Desc(old.getProgress()), old.getUpdateTime().toString());
+                HistoryDTO historyDTO = null;
+                // 有新进度说明前一步通过了
+                int proV = Progress.descToValue(dto.getProgress());
+                if (proV != Progress.WAIT_HR_INTERVIEW.value
+                        && proV != Progress.WAIT_THE_OFFER.value
+                        && proV != Progress.ALL_FINISH.value
+                        && proV != Progress.GOT_OFFER.value) {
+                    historyDTO = new HistoryDTO(HistoryProgress.value2Desc(proV), sdfH.format(new Date()));
+                } else {
+                    // 如果进度变为等待HR面，则显示为旧进度通过
+                    if(proV != Progress.WAIT_HR_INTERVIEW.value){
+                        historyDTO = new HistoryDTO(HistoryProgress.value2Desc(old.getProgress() + 1), sdfH.format(new Date()));
+                    }
+
+                    // 如果进度变为待通知，则存储为HR面通过
+                    if (proV == Progress.WAIT_THE_OFFER.value) {
+                        historyDTO = new HistoryDTO(HistoryProgress.HR_INTERVIEW_SUCCEED.desc, sdfH.format(new Date()));
+                    }
+
+                    // 如果进度变为结束[被拒]，则存储为old进度的未通过状态
+                    if (proV == Progress.ALL_FINISH.value) {
+                        int value = old.getProgress() + 10;
+                        historyDTO = new HistoryDTO(HistoryProgress.value2Desc(value), sdfH.format(new Date()));
+                    }
+
+                    // 如果进度变为拿到OFFER，则存储为GOT OFFER
+                    if (proV == Progress.GOT_OFFER.value) {
+                        historyDTO = new HistoryDTO(HistoryProgress.GOT_OFFER.desc, sdfH.format(new Date()));
+                    }
+                }
+
                 added = jsonArray.add(historyDTO);
                 history = jsonArray.toString();
             }
@@ -57,7 +90,6 @@ public class JobService {
             }
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Recruitment recruitment = Recruitment.builder()
                 .id(isAdd ? null : dto.getId())
                 .userId(userId)

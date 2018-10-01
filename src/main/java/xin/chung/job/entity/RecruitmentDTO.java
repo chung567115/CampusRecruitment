@@ -22,4 +22,5 @@ public class RecruitmentDTO {
     private String progress;
     private String comment;
     private String updateTime;
+    private String history;
 }

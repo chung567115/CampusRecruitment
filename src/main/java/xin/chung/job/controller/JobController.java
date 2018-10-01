@@ -72,6 +72,7 @@ public class JobController {
                 .progress(Progress.value2Desc(item.getProgress()))
                 .comment(item.getComment())
                 .updateTime(sdf.format(item.getUpdateTime()))
+                .history(item.getHistory())
                 .build();
     }
 
