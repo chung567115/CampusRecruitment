@@ -61,7 +61,7 @@ public class JobService {
                     historyDTO = new HistoryDTO(HistoryProgress.value2Desc(proV), sdfH.format(new Date()));
                 } else {
                     // 如果进度变为等待HR面，则显示为旧进度通过
-                    if(proV != Progress.WAIT_HR_INTERVIEW.value){
+                    if(proV == Progress.WAIT_HR_INTERVIEW.value){
                         historyDTO = new HistoryDTO(HistoryProgress.value2Desc(old.getProgress() + 1), sdfH.format(new Date()));
                     }
 
