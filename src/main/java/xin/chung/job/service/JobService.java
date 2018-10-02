@@ -18,7 +18,10 @@ import xin.chung.job.entity.ResponseDTO;
 import xin.chung.job.enums.*;
 import xin.chung.job.repository.JobRepository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
@@ -61,7 +64,7 @@ public class JobService {
                     historyDTO = new HistoryDTO(HistoryProgress.value2Desc(proV), sdfH.format(new Date()));
                 } else {
                     // 如果进度变为等待HR面，则显示为旧进度通过
-                    if(proV == Progress.WAIT_HR_INTERVIEW.value){
+                    if (proV == Progress.WAIT_HR_INTERVIEW.value) {
                         historyDTO = new HistoryDTO(HistoryProgress.value2Desc(old.getProgress() + 1), sdfH.format(new Date()));
                     }
 
@@ -126,8 +129,26 @@ public class JobService {
                 .build();
     }
 
-    public Page<Recruitment> findAllByParams(int page, int pageSize, int userId, String name, String addr, String progress) {
-        Pageable pageable = new PageRequest(page - 1, pageSize, Sort.Direction.ASC, "id");
+    public Page<Recruitment> findAllByParams(int page, int pageSize, int userId, int subSort, int updSort, String name, String addr, String progress) {
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        if (subSort != -1) {
+            if (subSort == 0) {
+                sort = new Sort(Sort.Direction.ASC, "submitTime");
+            }
+            if (subSort == 1) {
+                sort = new Sort(Sort.Direction.DESC, "submitTime");
+            }
+        }
+        if (updSort != -1) {
+            if (updSort == 0) {
+                sort = new Sort(Sort.Direction.ASC, "updateTime");
+            }
+            if (updSort == 1) {
+                sort = new Sort(Sort.Direction.DESC, "updateTime");
+            }
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, pageSize, sort);
         return jobRepository.findAll((Specification<Recruitment>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             list.add(criteriaBuilder.equal(root.get("userId").as(Integer.class), userId));

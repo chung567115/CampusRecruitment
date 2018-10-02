@@ -48,9 +48,13 @@ public class JobController {
      * @return
      */
     @GetMapping("/filter")
-    public Page<RecruitmentDTO> getAllByParams(HttpServletRequest request, @RequestParam int page, @RequestParam int pageSize,
-                                               @RequestParam String name, @RequestParam String addr, @RequestParam String progress) {
-        Page<Recruitment> recruitments = jobService.findAllByParams(page, pageSize, getLoginUserId(request), name, addr, progress);
+    public Page<RecruitmentDTO> getAllByParams(
+            HttpServletRequest request, @RequestParam int page, @RequestParam int pageSize, @RequestParam int subSort,
+            @RequestParam int updSort, @RequestParam String name, @RequestParam String addr, @RequestParam String progress
+    ) {
+        Page<Recruitment> recruitments = jobService.findAllByParams(
+                page, pageSize, getLoginUserId(request), subSort, updSort, name, addr, progress
+        );
         return recruitments.map(this::convert);
     }
 
