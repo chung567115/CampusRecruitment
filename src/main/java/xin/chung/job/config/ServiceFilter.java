@@ -28,6 +28,10 @@ public class ServiceFilter implements Filter {
         if (request.getRequestURI().contains("/job") || request.getRequestURI().contains("/login")) {
             filterChain.doFilter(servletRequest, servletResponse);
         }
+        if(request.getRequestURI().contains("/swagger-ui") || request.getRequestURI().contains("/api-docs")
+                || request.getRequestURI().contains("/springfox-swagger-ui") || request.getRequestURI().contains("/swagger-resources")){
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
     }
 
     @Override

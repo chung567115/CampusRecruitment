@@ -8,11 +8,21 @@ spring:
 #      suffix: .html
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/job
-    username: **
-    password: **
+    url: jdbc:mysql://localhost:3306/job?useSSL=false
+    username: root
+    password: root
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+swagger:
+   enabled: true
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
 

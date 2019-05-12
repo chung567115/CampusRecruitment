@@ -18,6 +18,17 @@ public class LoginService {
     @Autowired
     private LoginRepository loginRepository;
 
+    public User register(String username, String password) {
+        if (null != loginRepository.findByUsernameAndPassword(username, password)) {
+            return null;
+        }
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        User save = loginRepository.save(user);
+        return save;
+    }
+
     public User login(String username, String password, HttpServletRequest request) {
         User user = loginRepository.findByUsernameAndPassword(username, password);
         if (null == user) {

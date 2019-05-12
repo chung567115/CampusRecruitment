@@ -23,6 +23,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (request.getRequestURI().contains("login") || request.getMethod().equalsIgnoreCase("OPTIONS")) {
             return true;
         }
+        if(request.getRequestURI().contains("/swagger-ui") || request.getRequestURI().contains("/api-docs")
+                || request.getRequestURI().contains("/springfox-swagger-ui") || request.getRequestURI().contains("/swagger-resources")){
+            return true;
+        }
         User loginInfo = (User) request.getSession().getAttribute("loginInfo");
         if (null == loginInfo) {
             return false;

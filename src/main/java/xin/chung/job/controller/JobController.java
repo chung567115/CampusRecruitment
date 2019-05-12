@@ -1,5 +1,6 @@
 package xin.chung.job.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,10 @@ import java.text.SimpleDateFormat;
  * @Author Chung
  * @Date 2018/09/22 18:36
  */
-@CrossOrigin(origins = "http://127.0.0.1:8081", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = "http://192.168.0.7:8080", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/job")
+@Api(value = "job", description = "数据相关API")
 public class JobController {
     @Autowired
     public JobService jobService;
